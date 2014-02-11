@@ -1,0 +1,105 @@
+{
+  "bounds": [
+    -105.3094,
+    39.9585,
+    -105.184,
+    40.0572
+  ],
+  "center": [
+    -105.2668,
+    40.0075,
+    16
+  ],
+  "format": "png",
+  "interactivity": {
+    "fields": [
+      "ref",
+      "access",
+      "acc",
+      "fee",
+      "parking",
+      "maxstay",
+      "maxstay_disabled",
+      "capacity_disabled",
+      "osm_id"
+    ],
+    "layer": "parking",
+    "template_full": "<h1>Lot #{{ref}}</h1>\n<hr />\n<p>access: {{access}}</p>\n<p>acccess:conditional: {{acc}}</p>\n<p>fee: {{fee}}</p>\n<p>parking: {{parking}}</p>\n<p>maxstay: {{maxstay}}</p>\n<p>maxstay:disabled: {{maxstay_disabled}}</p>\n<p>capacity:disabled: {{capacity_disabled}}</p>",
+    "template_teaser": ""
+  },
+  "minzoom": 14,
+  "maxzoom": 21,
+  "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+  "Stylesheet": [
+    "cu-parking.mss",
+    "default.mss"
+  ],
+  "Layer": [
+    {
+      "geometry": "linestring",
+      "extent": [
+        -110.0435013015726,
+        36.01217294642281,
+        -99.37272755355096,
+        42.432475944879485
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(SELECT osm_id, way,  amenity, access, ( tags -> 'access:conditional' ) as acc, ref, (tags -> 'fee') as fee, (tags->'parking') as parking, (tags->'maxstay') as maxstay, (tags->'maxstay:disabled') as maxstay_disabled, (tags->'capacity:disabled') as capacity_disabled\nFROM planet_osm_polygon\nWHERE \"amenity\" IN ('parking', 'motorcycle_parking')\nORDER BY z_order asc) AS parking",
+        "key_field": "osm_id",
+        "geometry_field": "way",
+        "extent_cache": "auto",
+        "extent": "-12249986.53,4302296.48,-11062121.43,5225984.01",
+        "host": "localhost",
+        "port": "5432",
+        "user": "osm_read",
+        "password": "ZrJ3M4qeQN",
+        "dbname": "osm_cuboulder",
+        "id": "parking",
+        "project": "cu-parking",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      },
+      "id": "parking",
+      "class": "parking",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "parking"
+    },
+    {
+      "geometry": "point",
+      "extent": [
+        -109.82994798471142,
+        36.322930295622285,
+        -99.3867509861653,
+        42.1058370951973
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(SELECT way, osm_id, (tags->'vending') as vending, amenity\n    FROM planet_osm_point\n   WHERE amenity = 'vending_machine'\n) AS vending_machines",
+        "key_field": "osm_id",
+        "geometry_field": "way",
+        "extent_cache": "auto",
+        "extent": "-12226213.8835098,4345147.54697933,-11063682.5113778,5176846.53563924",
+        "dbname": "osm_cuboulder",
+        "host": "localhost",
+        "port": "5432",
+        "user": "osm_read",
+        "password": "ZrJ3M4qeQN"
+      },
+      "id": "vending_machines",
+      "class": "vending_machines",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "vending_machines"
+    }
+  ],
+  "scale": 1,
+  "metatile": 2,
+  "_basemap": "cuboulder.cu-basemap",
+  "description": "",
+  "attribution": "",
+  "name": "CU Parking",
+  "legend": ""
+}
